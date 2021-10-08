@@ -1,0 +1,7 @@
+"""Constants"""
+
+ENEMY_LIVES = ENEMY_LEVEL = 1
+ALLOWED_MOVES = range(1, 4)
+PLAYER_LIVES = 5
+SCORE = 0
+TOP = 10
