@@ -62,8 +62,6 @@ class Player:
                 return 1
             else:
                 return -1
-        else:
-            print('Not Valid input!')
 
     @print_score
     def attack(self, enemy_obj):
