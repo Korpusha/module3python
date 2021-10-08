@@ -14,6 +14,7 @@ def play():
     """
     while True:
         name_input = input('Your nickname: ')
+        print()
         if name_input.isdigit():
             print('Name can\'t consist only numeric symbols!\n')
         elif not 2 < len(name_input) < 32:
