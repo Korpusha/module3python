@@ -1,7 +1,7 @@
 from models import Player, Enemy, GameOver, EnemyDown
 from settings import ENEMY_LEVEL, ENEMY_LIVES, TOP
 
-final_result = player = None
+final_player = 0
 
 
 def play():
@@ -22,7 +22,6 @@ def play():
         else:
             break
 
-    global player
     player = Player(name_input)
     enemy = Enemy(ENEMY_LIVES, ENEMY_LEVEL)
     level = 1
@@ -37,22 +36,22 @@ def play():
             print('You have killed the opponent. +5 points!')
             print('-' * 14 + f'\nScore: {player.score}\n')
         except GameOver:
-            global final_result
-            final_result = player.score
-            raise GameOver
+            return player, GameOver
 
 
 if __name__ == '__main__':
     try:
-        play()
+        res = play()
+        final_player, exc = res
+        raise exc
     except KeyboardInterrupt:
         pass
     except GameOver:
         if len(GameOver.check_lines()) < TOP:
-            GameOver.append_lines(str(final_result))
+            GameOver.append_lines(str(final_player.score))
         else:
-            GameOver.write_lines(str(final_result))
+            GameOver.write_lines(str(final_player.score))
         GameOver.sort_lines()
     finally:
-        player.get_score()
+        final_player.get_score()
         print('Good bye!')
