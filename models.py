@@ -1,7 +1,7 @@
 """ Models """
 from exceptions import EnemyDown, GameOver
 from random import randrange
-from settings import *
+from settings import ALLOWED_MOVES, PLAYER_LIVES, SCORE, TOP
 
 
 def print_score(func):

@@ -1,8 +1,9 @@
 from models import Player, Enemy, GameOver, EnemyDown
-from settings import ENEMY_LEVEL, ENEMY_LIVES, TOP
+from settings import ENEMY_LEVEL, ENEMY_LIVES, TOP, Help
 
 final_player = 0
 
+Help.ask()
 
 def play():
     """

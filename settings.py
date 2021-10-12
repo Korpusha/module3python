@@ -8,16 +8,17 @@ TOP = 10
 
 
 class Help:
-    def __init__(self):
+    @staticmethod
+    def help_commands():
         print("""
 
         +========================+
         |  help commands:        |
-        |    Help.description()  |
-        |    Help.rules()        |
-        |    Help.warriors()     |
-        |    Help.enemy()        |
-        |    Help.full()         |
+        |    description         |
+        |    rules               |
+        |    warriors            |
+        |    enemy               |
+        |    full                |
         +========================+
 
         """)
@@ -57,13 +58,13 @@ class Help:
          |   This is the game that brought its concept from another popular               |
          |   game Rock-Paper-Scissors.                                                    |
          |                                                                                |
-         |   But main choices were changed on different 3 warriors (type Help.warriors()) |
+         |   But main choices were changed on different 3 warriors (type warriors)        |
          |   and steps were changed.                                                      |
          |                                                                                |
          |   There has appeared steps like attack and defence, where player               |
-         |   fights with bot using different warriors (type Help.rules()).                |
+         |   fights with bot using different warriors (type rules).                       |
          |                                                                                |
-         |   The game has got no end, as new enemies will appear (type Help.enemy()).     |
+         |   The game has got no end, as new enemies will appear (type enemy).            |
          |                                                                                |
          |   Get your dexterous fingers and beat as much bots as you can!                 |
          +================================================================================+ 
@@ -76,7 +77,7 @@ class Help:
 
          +============================================================================+
          |   Your enemy is bot.                                                       |
-         |   His choice of warriors is random (type Help.warriors, Help.rules).       |
+         |   His choice of warriors is random (type warriors, rules).                 |
          |   When he dies - appears new enemy but his level and HP is greater by one. |
          |   So this game is infinite till you lose.                                  |
          +============================================================================+
@@ -90,21 +91,11 @@ class Help:
         Help.description()
         Help.warriors()
 
-
-while True:
-    user = input('Print \'start\' to begin. Use Help() for more info: ')
-    if user == 'Help()':
-        Help()
-    if user == 'Help.description()':
-        Help.description()
-    if user == 'Help.rules()':
-        Help.rules()
-    if user == 'Help.warriors()':
-        Help.warriors()
-    if user == 'Help.enemy()':
-        Help.enemy()
-    if user == 'Help.full()':
-        Help.full()
-    if user.lower() == 'start':
-        print()
-        break
+    @staticmethod
+    def ask():
+        while True:
+            user = input('Print \'start\' to begin. Use help_commands for more info: ')
+            if user.lower() == 'start':
+                break
+            func = getattr(Help, user.lower())
+            func()
