@@ -5,6 +5,7 @@ final_player = 0
 
 Help.ask()
 
+
 def play():
     """
     Check validity of name input.

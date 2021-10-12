@@ -95,7 +95,10 @@ class Help:
     def ask():
         while True:
             user = input('Print \'start\' to begin. Use help_commands for more info: ')
+            try:
+                func = getattr(Help, user.lower())
+                func()
+            except AttributeError:
+                pass
             if user.lower() == 'start':
                 break
-            func = getattr(Help, user.lower())
-            func()
