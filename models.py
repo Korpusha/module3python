@@ -1,5 +1,7 @@
 """ Models """
-from exceptions import EnemyDown, GameOver
+import sys
+
+from exceptions import EnemyDown, GameOver, Exit
 from random import randrange
 from settings import ALLOWED_MOVES, PLAYER_LIVES, SCORE, TOP
 
@@ -17,11 +19,16 @@ def print_score(func):
 
 
 def validation():
+    """Validation of user input"""
+
     while True:
         try:
-            user_input = int(input())
-            if user_input in ALLOWED_MOVES:
-                return user_input
+            user_input = input()
+            if user_input == 'exit':
+                Exit.to_exit()
+
+            if int(user_input) in ALLOWED_MOVES:
+                return int(user_input)
         except ValueError:
             pass
         print(f'Please, insert valid symbol! {list(ALLOWED_MOVES)}\n')
@@ -35,16 +42,16 @@ class GetScore:
         If you in the table - you will see your scores next to your name.
 
         """
-        flag = True
+
         while True:
             print(f'Do you want to get final top-{TOP} scores? (y ; n) \n')
             user_input = input()
             if user_input == 'y':
                 print(f'Top-{TOP}:')
                 for score in GameOver.check_lines():
-                    if int(score) == scores and flag:
+                    if int(score) == scores:
                         print(f'{score} - {name}')
-                        flag = False
+                        scores = -1
                         continue
                     print(score)
             elif user_input != 'n':
@@ -55,6 +62,7 @@ class GetScore:
 
 class Enemy:
     """Model of enemy. Used for stone/scissors/paper game concept"""
+
     def __init__(self, level: int, enemy_lives: int):
         self.level = level
         self.lives = enemy_lives
@@ -62,6 +70,7 @@ class Enemy:
     @staticmethod
     def select_attack() -> int:
         """Random choice of attack/defence."""
+
         return randrange(1, 4)
 
     def decrease_lives(self):
@@ -70,6 +79,7 @@ class Enemy:
         Decrease lives and raise EnemyDown exception when lives == 0.
 
         """
+
         self.lives -= 1
         print('Enemy`s HP: ', self.lives)
         if self.lives == 0:
@@ -91,6 +101,7 @@ class Player(GetScore):
         Compares who has won.
 
         """
+
         if attack in ALLOWED_MOVES and defence in ALLOWED_MOVES:
             if attack == defence:
                 return 0
@@ -107,6 +118,7 @@ class Player(GetScore):
         Shows fight result.
 
         """
+
         user_input = validation()
 
         match_res = Player.fight(user_input, enemy_obj.select_attack())
@@ -145,6 +157,7 @@ class Player(GetScore):
         Decrease lives and raise GameOver exception when lives = 0.
 
         """
+
         self.player_lives -= 1
         if self.player_lives == 0:
             print(f'{self.name} died!\n')

@@ -1,3 +1,6 @@
+import sys
+
+
 class GameOver(Exception):
     @staticmethod
     def append_lines(my_result):
@@ -50,4 +53,11 @@ class GameOver(Exception):
 
 class EnemyDown(Exception):
     """Raised when enemy is beaten"""
-    pass
+
+
+class Exit(Exception):
+    """Exit programme"""
+    @staticmethod
+    def to_exit():
+        sys.exit()
+
