@@ -1,6 +1,5 @@
 from models import Player, Enemy, GetScore, GameOver, EnemyDown
 from settings import ENEMY_LEVEL, ENEMY_LIVES, TOP, Help
-
 final_player = None
 
 Help.ask()
@@ -55,5 +54,8 @@ if __name__ == '__main__':
             GameOver.write_lines(str(final_player.score))
         GameOver.sort_lines()
     finally:
-        GetScore.get_score(final_player.score, final_player.name)
+        try:
+            GetScore.get_score(final_player.score, final_player.name)
+        except AttributeError:
+            pass
         print('Good bye!')
