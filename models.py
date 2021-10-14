@@ -16,17 +16,53 @@ def print_score(func):
     return wrapper
 
 
+def validation():
+    while True:
+        try:
+            user_input = int(input())
+            if user_input in ALLOWED_MOVES:
+                return user_input
+        except ValueError:
+            pass
+        print(f'Please, insert valid symbol! {list(ALLOWED_MOVES)}\n')
+
+
+class GetScore:
+    @staticmethod
+    def get_score(scores, name):
+        """
+        Shows top scores.
+        If you in the table - you will see your scores next to your name.
+
+        """
+        flag = True
+        while True:
+            print(f'Do you want to get final top-{TOP} scores? (y ; n) \n')
+            user_input = input()
+            if user_input == 'y':
+                print(f'Top-{TOP}:')
+                for score in GameOver.check_lines():
+                    if int(score) == scores and flag:
+                        print(f'{score} - {name}')
+                        flag = False
+                        continue
+                    print(score)
+            elif user_input != 'n':
+                continue
+            break
+        print(f'\nThanks for playing, {name}!')
+
+
 class Enemy:
     """Model of enemy. Used for stone/scissors/paper game concept"""
+    def __init__(self, level: int, enemy_lives: int):
+        self.level = level
+        self.lives = enemy_lives
 
     @staticmethod
     def select_attack() -> int:
         """Random choice of attack/defence."""
         return randrange(1, 4)
-
-    def __init__(self, level: int, enemy_lives: int):
-        self.level = level
-        self.lives = enemy_lives
 
     def decrease_lives(self):
         """
@@ -40,7 +76,7 @@ class Enemy:
             raise EnemyDown
 
 
-class Player:
+class Player(GetScore):
     """Model of player. Used for stone/scissors/paper game concept"""
 
     def __init__(self, name: str):
@@ -71,14 +107,7 @@ class Player:
         Shows fight result.
 
         """
-        while True:
-            try:
-                user_input = int(input())
-                if user_input in ALLOWED_MOVES:
-                    break
-            except ValueError:
-                pass
-            print(f'Please, insert valid symbol! {list(ALLOWED_MOVES)}\n')
+        user_input = validation()
 
         match_res = Player.fight(user_input, enemy_obj.select_attack())
         if match_res == 0:
@@ -98,14 +127,8 @@ class Player:
         Shows fight result.
 
         """
-        while True:
-            try:
-                user_input = int(input())
-                if user_input in ALLOWED_MOVES:
-                    break
-            except ValueError:
-                pass
-            print(f'Please, insert valid symbol! {list(ALLOWED_MOVES)}\n')
+
+        user_input = validation()
 
         match_res = Player.fight(enemy_obj.select_attack(), user_input)
         if match_res == 0:
@@ -127,26 +150,3 @@ class Player:
             print(f'{self.name} died!\n')
             raise GameOver
         print('Player`s HP: ', self.player_lives)
-
-    def get_score(self):
-        """
-        Shows top scores.
-        If you in the table - you will see your scores next to your name.
-
-        """
-        flag = True
-        while True:
-            print(f'Do you want to get final top-{TOP} scores? (y ; n) \n')
-            user_input = input()
-            if user_input == 'y':
-                print(f'Top-{TOP}:')
-                for score in GameOver.check_lines():
-                    if int(score) == self.score and flag:
-                        print(f'{score} - {self.name}')
-                        flag = False
-                        continue
-                    print(score)
-            elif user_input != 'n':
-                continue
-            break
-        print(f'\nThanks for playing, {self.name}!')
