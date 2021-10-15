@@ -21,6 +21,7 @@ def play():
         elif not 2 < len(name_input) < 32:
             print('Please, change your name.\n')
         else:
+            print('Type "exit" to quit game.')
             break
 
     player = Player(name_input)
