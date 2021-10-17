@@ -1,6 +1,4 @@
 """ Models """
-import sys
-
 from exceptions import EnemyDown, GameOver, Exit
 from random import randrange
 from settings import ALLOWED_MOVES, PLAYER_LIVES, SCORE, TOP
@@ -86,7 +84,7 @@ class Enemy:
             raise EnemyDown
 
 
-class Player(GetScore):
+class Player:
     """Model of player. Used for stone/scissors/paper game concept"""
 
     def __init__(self, name: str):
