@@ -2,8 +2,6 @@ from models import Player, Enemy, GetScore, GameOver, EnemyDown
 from settings import ENEMY_LEVEL, ENEMY_LIVES, TOP, Help
 final_player = None
 
-Help.ask()
-
 
 def play():
     """
@@ -43,11 +41,13 @@ def play():
 
 if __name__ == '__main__':
     try:
+        Help.ask()
         res = play()
         final_player, exc = res
         raise exc
     except KeyboardInterrupt:
-        pass
+        print('\nGame process was interrupted so...')
+        raise SystemExit
     except GameOver:
         if len(GameOver.check_lines()) < TOP:
             GameOver.append_lines(str(final_player.score))
